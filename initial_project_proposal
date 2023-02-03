@@ -1,0 +1,190 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Project Proposal\n",
+    "@author: Vania Alvarez Murakami"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Predicting the World Cup Winner"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Motivation\n",
+    "### Problem\n",
+    "Every four years when the FIFA World Cup rolls around, there's always a handful of favorite teams selected to win the World Cup. Many bets are placed for each match, group stage and of course the final match, but in reality these predictions are not truly accurate. In 2018, companies with billion dollar incomes such as UBS, Goldman Sachs and ING used tools at their dispposal to predict who the winners would be (Germany, Brazil and Spain respectively)(Condlifffe, 2018)[^1]—they were all wrong. In fact, none of the teams they predicted even made it to the top 4 in the World Cup (Fox Sports, 2022)[^2]. Other inconsistencies show up even at the qualifying level. One of the biggest examples for this year's World Cup is Italy, who after winning the Union of European Football Associations (UEFA) Championship in 2020 still failed to qualify this year(Morse, 2022) [^3], or Germany in 2018, who at the time held the World Cup championship yet lost 0-1 against Mexico in the group stage and failed to make it to the knockout stage (ESPN staff, 2018)[^4]. \n",
+    "\n",
+    "The current statistical analyses and ML only focus on player and team performance—this is too narrow. Seeing as the World Cup is a competition against countries, in addition to looking at player/team performance, country-specific data can help explain why some teams perform better than others. According to the 2022 article published by the Economic Research-Ekonomska Istraživanja Journal, performance in the Olympics is correlated to factors such as inflation rate and population size: \"nations with a considerable rate of inflation, high population, and high index of income classification have a better chance of winning more medals\" (Shasha, et.al, 2022). This is insightful as it points towards a trend in country performance correlating with performance at sports events.\n",
+    "\n",
+    "### Solution\n",
+    "To narrow down the gap between predictions and actual outcomes, this project will seek to expand the variables that are typically used to predict team performance in the World Cup, and explore more grand-scale implications of World Cup performance linked to country development. In order to do so, this project will address the issue of imprecise statistical prediction tools, while also including a wider range of variables to include country performance in addition to player and team performance. \n",
+    "\n",
+    "Predictions are often based on statistical analysis, but Machine Learning (ML) can have much more accurate predictions in the long-run. Statistical analysis has been widely used in sports such as baseball, and now ML is starting to be used in the sport as well (Koseler & Stephan, 2018)[^5]. This serves as a good example on real-world applications of data science in the sports world, and ML practices used in baseball can also apply to soccer. \n",
+    "\n",
+    "### Impact\n",
+    "The World Cup is one of the most watched sports event in the world, with this year's World Cup being predicted to have 5 billion viewers (Reuters, 2022)[^6]. Applying newer technology such as ML can help make better predictions in the World Cup. If succesfull, the results of this project can be used to aid teams to optimize team performance on the field by allowing for more strategic decision-making when building, training and budget spending of the team. Additionally, given that this is a country-to-country competition, team performance can also be an indicator of how well a country is doing in terms of development, and standard of living.\n",
+    "\n",
+    "\n",
+    "[^1]: https://www.nytimes.com/2018/06/12/business/dealbook/world-cup-goldman-banks.html\n",
+    "[^2]: https://www.foxsports.com/soccer/2022-fifa-world-cup/history\n",
+    "[^3]: https://www.cnn.com/2022/03/25/football/italy-north-macedonia-2022-world-cup-spt-intl#:~:text=Italy%20players%20are%20%E2%80%9Cdestroyed%20and,according%20to%20defender%20Giorgio%20Chiellini\n",
+    "[^4]: https://www.espn.com/soccer/match/_/gameId/498193\n",
+    "[^5]: https://www.tandfonline.com/doi/full/10.1080/08839514.2018.1442991\n",
+    "[^6]: https://www.usnews.com/news/world/articles/2022-05-23/davos-qatars-world-cup-audience-projected-to-be-5-billion-fifa-boss"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Dataset\n",
+    "### Variables Observed\n",
+    "The data that will be used in this project can be divided into two subgroups, 1) player and team performance data, and 2) country level data. Below is a list of the variables that will be covered in each group.\n",
+    "\n",
+    "**Player/Team Performance Data**: This data can be obtained from a variety of sources, but many are not entirely reliable (more on this in the *Data Reliability and Potential Problems section*). Here is a [Kaggle  FIFA World Cup dataset](https://www.kaggle.com/datasets/abecklas/fifa-world-cup) that contains all the historical data for the World Cup and can be downloaded as a .csv file.\n",
+    "- historical performance of the country \n",
+    "    - games played to games won in each World Cup\n",
+    "    - previous World Cup titles won\n",
+    "    - round reached in each World Cup\n",
+    "- qualifying points (for upcoming World Cup)\n",
+    "- “total value” of a national team\n",
+    "    - calculated based on the average of the players\n",
+    "- avgerage player age\n",
+    "- coach ranking\n",
+    "- spending on World Cup team\n",
+    "\n",
+    "**Country Level Data**: All data in this category can be obtained from the [World Bank](https://data.worldbank.org/), except for the government corruption (see citation for corruption index below).\n",
+    "- population size \n",
+    "- GDP per capita \n",
+    "- government corruption (Corruption Perceptions Index) (Transparency International, 2021) [^7]\n",
+    "- inflation rate\n",
+    "- life expectancy\n",
+    "- literacy rate (proxy for education level)\n",
+    "- uneployment rate\n",
+    "- exports to GDP\n",
+    "\n",
+    "[^7]: https://www.transparency.org/en/cpi/2021"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Example Data Set\n",
+    "These are examples of how the dataset will look like once compiled.\n",
+    "\n",
+    "**The Player/Team Performance Data**\n",
+    "\n",
+    "| country | wc_2014 | wc_2018 | qualifying_pts | team_value | player_age_avg | coach_ranking | wc_spending |\n",
+    "|---------|---------|---------|----------------|------------|----------------|---------------|-------------|\n",
+    "| USA     | 0.25    | nan     | 25             | 204400000  | 32             | 15            | 322000000   |\n",
+    "| MEX     | 0.50    | 0.50    | 28             | 201300000  | 27             | 27            | 9000000     |\n",
+    "| FRA     | 0.60    | 0.85    | 18             | 886000000  | 29             | 2             | 110000000   |\n",
+    "\n",
+    "Note. This dataset should have a multi-index, to show the individual player data and provide a cumulative and/or average of the entire team as a whole. This project should focus on the team as a whole rather than the individual players, but can be broken down by how much value each team member brings to the team.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Country Level Data**\n",
+    "\n",
+    "| country | population | gdp_capita_usd | corruption | inflation_rate | life_expectancy | avg_schooling_years | unemployment_rate | exports_to_GDP |\n",
+    "|---------|------------|----------------|------------|----------------|-----------------|---------------------|-------------------|----------------|\n",
+    "| USA     | 67499343   | 69287.5        | 67         | 4.7            | 77              | 13                  | 5.5               | 10.2           |\n",
+    "| MEX     | 130262220  | 9926.4         | 31         | 5.7            | 75              | 9                   | 4.4               | 40.4           |\n",
+    "| FRA     | 67499343   | 43518.5        | 71         | 1.6            | 82              | 12                  | 8.1               | 29.9           |"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Data Applications\n",
+    "The approach of looking at player or team performance might not necessarily be as accurate in predicting or even understanding why some teams perform better than others in the World Cup. What if there is more to the World Cup than having the best players on a team? Some countries participating in the World Cup have drastically different governments, populations, economic performance, morality rates, and different inflation rates.\n",
+    "\n",
+    "The data will be grouped by teams, and will have to provide team-level/country-level metrics, whereby a statistical analysis will dictate (based on historical performance) which variables are the most important to consider. Then, we will have to cluster the team's probability of winning matches, reaching a certain stage, and winning the World Cup based on both the strength of the players and teams, and the country as a whole."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Data Reliability and Potential Problems\n",
+    "### Data Collection\n",
+    "Data collection is always tricky, however, with this project in particular it is a disadvantage that there are not many API's that can be used to directly download the data into Jupyter Notebooks or PyCharm. In many cases perhaps the data is not able to be downloaded as CSV files. While a lot of information is already available, not all of it is in the format that will be needed making the compilation and cleaning of the data likely to be a cumbersome task. Reliability of data is also a big concern, particularly when it comes to team-level data, as much of this information is difficult to find, and oftentimes can be found, but the sources are not entirely reliable.\n",
+    "\n",
+    "Additionally, some of the variables chosen to measure country performance might not necessarily be the most accurate proxies for measuring country performance because of the nature of how these variables are measured, not because the data is flawed (e.g. inflation currently is rather high worldwide because of a variety of complex issues that are not necessarily related to country performance and have more to do with events such as the COVID-19 pandemic that affected the entire world economy).\n",
+    "\n",
+    "### Machine Learning Implementation\n",
+    "As the project advances, the World Cup will have started as well, so one potential challenge will be adjusting to the new incoming data of the matches being played. It is something to consider before starting the project whether scores of matches will/should be included into the project, and if yes, how to incorporate this information. This is also a plus side however, because the outcomes of this matches can be used as real-time feedback on how accurate the project is at predictig/understanding trends.\n",
+    "\n",
+    "### Other Potential Problems\n",
+    "Predicting any sport is incredibly complicated, and it may be the case that it is rather difficult to find any statistical significance between any of the variables listed that are strong enough to predict the outcome of the World Cup with high accuracy."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# References"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Condliffe, J. (2018, June 12). What country will win the 2018 World Cup? here are big banks' predictions. The New York Times. Retrieved October 11, 2022, from https://www.nytimes.com/2018/06/12/business/dealbook/world-cup-goldman-banks.html \n",
+    "\n",
+    "ESPN staff. (2018, June 17). Germany vs. Mexico - football match summary - June 17, 2018. ESPN. Retrieved October 11, 2022, from https://www.espn.com/soccer/match/_/gameId/498193 \n",
+    "\n",
+    "Fox Sports. (2022). FIFA Men's World Cup history - past World Cup winners, hosts, most goals and more. FIFA Men's World Cup History - Past World Cup Winners, Hosts, Most Goals and more | FOX Sports. Retrieved October 11, 2022, from https://www.foxsports.com/soccer/2022-fifa-world-cup/history \n",
+    "\n",
+    "Karnuta, J. M., Luu, B. C., Haeberle, H. S., Saluan, P. M., Frangiamore, S. J., Stearns, K. L., Farrow, L. D., Nwachukwu, B. U., Verma, N. N., Makhni, E. C., Schickendantz, M. S., &amp; Ramkumar, P. N. (2020). Machine learning outperforms regression analysis to predict next-season major league baseball player injuries: Epidemiology and validation of 13,982 player-years from performance and injury profile trends, 2000-2017. Orthopaedic Journal of Sports Medicine, 8(11), 232596712096304. https://doi.org/10.1177/2325967120963046 \n",
+    "\n",
+    "Koseler, K., Stephan, M. (2017). Machine learning applications in baseball: A systematic literature review. Applied Artificial Intelligence, 31(9-10), 745–763. https://doi.org/10.1080/08839514.2018.1442991 \n",
+    "\n",
+    "Morse, B. (2022, March 25). Italy players are 'destroyed and crushed' after failing to qualify for 2022 World Cup following loss to North Macedonia. CNN. Retrieved October 11, 2022, from https://www.cnn.com/2022/03/25/football/italy-north-macedonia-2022-world-cup-spt-intl#:~:text=Italy%20players%20are%20%E2%80%9Cdestroyed%20and,according%20to%20defender%20Giorgio%20Chiellini. \n",
+    "\n",
+    "Rueters. (2022, May 23). Qatar World Cup audience projected at 5 billion, says FIFA boss. Retrieved October 12, 2022, from https://www.usnews.com/news/world/articles/2022-05-23/davos-qatars-world-cup-audience-projected-to-be-5-billion-fifa-boss \n",
+    "\n",
+    "Rodrigues, F., Pinto, Â. (2022). Prediction of football match results with Machine Learning. Procedia Computer Science, 204, 463–470. https://doi.org/10.1016/j.procs.2022.08.057 \n",
+    "\n",
+    "Shasha, W., Abbasi, B. N., &amp; Sohail, A. (2022). Assessment of olympic performance in relation to economic, demographic, geographic, and social factors: Quantile and Tobit approaches. Economic Research-Ekonomska Istraživanja, 1–25. https://doi.org/10.1080/1331677x.2022.2080735 \n",
+    "\n",
+    "Transparency International. (2021). 2021 corruption perceptions index - explore the results. Transparency.org. Retrieved October 11, 2022, from https://www.transparency.org/en/cpi/2021 "
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.15"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
